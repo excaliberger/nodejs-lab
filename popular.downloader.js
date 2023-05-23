@@ -1,11 +1,14 @@
 const path = require("path");
 const fs = require("fs");
 const rp = require("request-promise");
+const fetch = require("isomorphic-fetch");
 
-rp("https://reddit.com/r/popular.json", (err, res, body) => {
-  if (err) console.log(err);
+const redditImageDownload = async () => {
+  const res = await fetch ("https://reddit.com/r/programmingHumor.json")
+  const arrayBuffer = await res.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
 
-  JSON.parse(body).data.children.forEach(article => {
+  JSON.parse(Buffer.from(arrayBuffer).toString()).data.children.forEach(article => {
     if (
       path.extname(article.data.url) === ".png" ||
       path.extname(article.data.url) === ".jpg" ||
@@ -17,4 +20,6 @@ rp("https://reddit.com/r/popular.json", (err, res, body) => {
       );
     }
   });
-});
+};
+
+redditImageDownload();

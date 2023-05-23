@@ -11,7 +11,7 @@ let chirps = [
   { author: "Kvothe", body: "I could play a round. Who will be our fourth?" }
 ];
 
-fs.writeFileSync(dataPath, chirps, err => {
+fs.writeFileSync(dataPath, JSON.stringify(chirps), err => {
   if (err) console.log(err);
 });
 
